@@ -175,6 +175,10 @@ describe LuceneQueryParser::Parser do
       {:phrase => "normal phrase"}
     ])}
 
+    it "should not parse a proximity query" do
+      should_not (parse("test ~5 test"))
+    end
+
   end
 
   describe "#error_location" do
@@ -188,7 +192,7 @@ describe LuceneQueryParser::Parser do
       error = parser.error_location("invalid^ query")
       error[:line].should == 1
       error[:column].should == 8
-      error[:message].should =~ /Expected/
+      error[:message].should =~ /Failed to match sequence/
     end
   end
 
